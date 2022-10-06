@@ -1,0 +1,21 @@
+{
+  "name": "mini-core-redux",
+  "miniprogram": "miniprogram",
+  "version": "1.0.0",
+  "scripts": {
+    "env": "node ./scripts/handle_process.js NODE_ENV=production"
+  },
+  "author": "い 狂奔的蜗牛",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.8.2",
+    "@types/redux-logger": "^3.0.9",
+    "typescript": "^4.5.3"
+  },
+  "dependencies": {
+    "mini-core": "^1.0.68",
+    "redux": "~4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "~2.3.0"
+  }
+}

@@ -1,0 +1,10 @@
+<view class="detail">
+  详情页计数器：{{detailState.counter}}
+  <button type="primary" bindtap="increment">+1</button>
+  <button type="primary" bindtap="decrement">-1</button>
+  姓名：{{indexState.userInfo.name}}
+  年龄：{{indexState.userInfo.age}}
+  爱好：
+  <block wx:for="{{indexState.userInfo.hobbies}}" wx:key="index">{{item}}、</block>
+  <button type="primary" bindtap="handleClick">更改用户信息</button>
+</view>
