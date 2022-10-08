@@ -1,23 +1,31 @@
 import { Data, go, Page } from 'mini-core';
-import Application from '../../app';
-import { IndexState, Action } from './store/index';
+import { Action, UserInfo } from './store/index';
+import { MapStateToDataResult, RootState, store, subscribe } from '../../store/index';
 
-const app = getApp<Application>();
 @Page
 export default class Index {
   @Data
-  public state: IndexState;
+  public counter: number = 0;
+  @Data
+  public userInfo: UserInfo;
 
   public onLoad() {
-    app.subscribe<Index, IndexState>(this, 'state', 'indexReducer');
+    subscribe(this, this.mapStateToData);
+  }
+
+  public mapStateToData(state: RootState): MapStateToDataResult<Index> {
+    return {
+      counter: state.indexReducer.counter,
+      userInfo: state.indexReducer.userInfo
+    };
   }
 
   public increment() {
-    app.store.dispatch(Action.incrementAction());
+    store.dispatch(Action.incrementAction());
   }
 
   public decrement() {
-    app.store.dispatch(Action.decrementAction());
+    store.dispatch(Action.decrementAction());
   }
 
   public handleClick() {
@@ -26,6 +34,6 @@ export default class Index {
 
   public handleClickAsync() {
     // @ts-ignore
-    app.store.dispatch(Action.updateUserInfoAsyncAction({ hobbies: [...this.state.userInfo.hobbies!, '吃饭'] }));
+    store.dispatch(Action.updateUserInfoAsyncAction({ hobbies: [...this.userInfo.hobbies!, '吃饭'] }));
   }
 }

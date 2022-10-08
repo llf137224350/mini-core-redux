@@ -1,43 +1,50 @@
 import { Data, Page, showToast } from 'mini-core';
-import Application from '../../app';
-import { IndexState, Action as IndexActions } from '../index/store/index';
-import { Action, DetailState } from './store/index';
+import { Action as IndexActions, UserInfo } from '../index/store/index';
+import { Action } from './store/index';
+import { MapStateToDataResult, RootState, store, subscribe } from '../../store/index';
 
 /*
  * @Author: い 狂奔的蜗牛
  * @Date: 2022-10-06 11:24:01
  * @Description:  测试同步
  */
-const app = getApp<Application>();
 @Page
 export default class Detail {
   @Data
-  public indexState: IndexState;
+  public counter: number;
   @Data
-  public detailState: DetailState;
+  public userInfo: UserInfo;
 
   public onLoad() {
-    // 重置之前可能做的数据更改
-    app.store.dispatch(Action.resetAction());
-    // 订阅新的值
-    app.subscribe<Detail, IndexState>(this, 'indexState', 'indexReducer');
-    app.subscribe<Detail, DetailState>(this, 'detailState', 'detailReducer');
+    store.dispatch(Action.resetAction());
+    subscribe(this, this.mapStateToData);
+  }
+
+  public mapStateToData(state: RootState): MapStateToDataResult<Detail> {
+    return {
+      counter: state.detailReducer.counter,
+      userInfo: state.indexReducer.userInfo
+    };
   }
 
   public increment() {
-    app.store.dispatch(Action.incrementAction());
+    store.dispatch(Action.incrementAction());
   }
 
   public decrement() {
-    app.store.dispatch(Action.decrementAction());
+    store.dispatch(Action.decrementAction());
   }
 
   public handleClick() {
-    app.store.dispatch(
+    store.dispatch(
       IndexActions.updateUserInfoAction({
-        hobbies: [...this.indexState.userInfo.hobbies!, '吃饭']
+        hobbies: [...this.userInfo.hobbies!, '吃饭']
       })
     );
     showToast('更改成功');
+  }
+
+  public onUnload() {
+    console.log('执行原有onUnload');
   }
 }

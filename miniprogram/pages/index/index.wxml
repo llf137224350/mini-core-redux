@@ -1,11 +1,11 @@
 <view class="container">
-  首页计数器：{{state.counter}}
+  首页计数器：{{counter}}
   <button type="primary" bindtap="increment">+1</button>
   <button type="primary" bindtap="decrement">-1</button>
-  姓名：{{state.userInfo.name}}
-  年龄：{{state.userInfo.age}}
+  姓名：{{userInfo.name}}
+  年龄：{{userInfo.age}}
   爱好：
-  <block wx:for="{{state.userInfo.hobbies}}" wx:key="index">{{item}}、</block>
+  <block wx:for="{{userInfo.hobbies}}" wx:key="index">{{item}}、</block>
   <button type="primary" bindtap="handleClick">详情页</button>
   <button type="primary" bindtap="handleClickAsync">测试异步更新信息</button>
 </view>
